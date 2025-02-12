@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Modal from "react-modal";
 import ReactModal from "react-modal";
 import * as styles from './modal.scss';
@@ -6,70 +6,88 @@ import * as styles from './modal.scss';
 ReactModal.setAppElement('body');
 
 export default function App() {
+    const [modal01IsOpen, setModal01IsOpen] = useState(false);
+    const [modal02IsOpen, setModal02IsOpen] = useState(false);
+    const [modal03IsOpen, setModal03IsOpen] = useState(false);
+    const [modal04IsOpen, setModal04IsOpen] = useState(false);
+    const [modal05IsOpen, setModal05IsOpen] = useState(false);
 
     return (
         <>
             {/* example modal01: Minimal */}
-            <button>modal01</button>
+            <button onClick={() => setModal01IsOpen(true)}>modal01</button>
             <br/><br/>
 
             <Modal
-                isOpen={false}
+                isOpen={modal01IsOpen}
                 contentLabel="modal01 example">
                 <h1>modal01</h1>
-                <button>
+                <button onClick={() => setModal01IsOpen(false)}>
                     Close
                 </button>
             </Modal>
 
 
             {/* example modal02: Using onRequestClose */}
-            <button>modal02</button>
+            <button onClick={() => setModal02IsOpen(true)}>modal02</button>
             <br/><br/>
 
             <Modal
-                isOpen={false}
+                isOpen={modal02IsOpen}
+                onRequestClose={() => console.log("onRequestClose!!")}
                 contentLabel="modal02 example">
                 <h1>modal02</h1>
-                <button>
+                <button onClick={() => setModal02IsOpen(false)}>
                     Close
                 </button>
             </Modal>
 
 
             {/* example modal03: Using shouldCloseOnOverlayClick */}
-            <button>modal03</button>
+            <button onClick={() => setModal03IsOpen(true)}>modal03</button>
             <br/><br/>
             <Modal
-                isOpen={false}
-                contentLabel="modal03 example">
+                isOpen={modal03IsOpen}
+                contentLabel="modal03 example"
+                onRequestClose={() => setModal03IsOpen(false)}
+                shouldCloseOnOverlayClick={false}>
                 <h1>modal03</h1>
-                <button>
+                <button onClick={() => setModal03IsOpen(false)}>
                     Close
                 </button>
             </Modal>
 
 
             {/* example modal04: Using inline styles */}
-            <button>modal04</button>
+            <button onClick={() => setModal04IsOpen(true)}>modal04</button>
             <br/><br/>
 
             <Modal
-                isOpen={false}
-                contentLabel="modal04 example">
+                isOpen={modal04IsOpen}
+                contentLabel="modal04 example"
+                style={{
+                    overlay: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    },
+                    content: {
+                        backgroundColor: '#ccc'
+                    }
+                }}
+            >
                 <h1>modal04</h1>
-                <button>
+                <button onClick={() => setModal04IsOpen(false)}>
                     Close
                 </button>
             </Modal>
 
 
+
             {/* example modal04: Using CSS/SASS styles */}
-            <button>modal05</button>
+            <button onClick={()=>setModal05IsOpen(true)}>modal05</button>
             <br/><br/>
 
             <Modal
-                isOpen={false}
+                isOpen={modal05IsOpen}
                 className={styles.Modal}
                 overlayClassName={styles.Overlay}
                 style={{content: {width: 350}}}
@@ -78,9 +96,9 @@ export default function App() {
                 <div>
                     하하하하하하하~
                 </div>
-                <div className={ styles['modal-dialog-buttons'] }>
+                <div className={styles['modal-dialog-buttons']}>
                     <button>확인</button>
-                    <button>취소</button>
+                    <button onClick={()=>setModal05IsOpen(false)}>취소</button>
                 </div>
             </Modal>
         </>

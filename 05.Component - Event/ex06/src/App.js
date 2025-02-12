@@ -9,14 +9,13 @@ export default class App extends Component {
     render() {
         return (
             <div
-                className={'App'}>
-                <div>
+                className={'App'} ref={(ref) => this.outerRef = ref}
+                onScroll={(e) => console.log(this.outerRef.current.scrollTop, this.outerRef.current.clientHeight,this.innerRef.current.clientHeight)}>
+                <div ref={(ref) => this.innerRef = ref}>
                     <ul>
-                        <li>아이템 1입니다.</li>
-                        <li>아이템 2입니다.</li>
-                        <li>아이템 3입니다.</li>
-                        <li>아이템 4입니다.</li>
-                        <li>아이템 5입니다.</li>
+                        {
+                            Array.from({length: 100}).map((_,i) => <li key={i+1}>{`아이템 ${i+1} 입니다`}</li>)
+                        }
                     </ul>
                 </div>
             </div>

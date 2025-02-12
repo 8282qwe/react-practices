@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import TabItem from "./TabItem";
 import styled from "styled-components";
 
@@ -8,9 +8,17 @@ const TabsUl = styled.ul`
 `;
 
 function Tabs({tabBoxItems}) {
+    const [tabBoxItem, setTabBoxItem] = useState(tabBoxItems);
+
+    const onTabClick = (no) => {
+        setTabBoxItem(tabBoxItem.map((e) => ({
+            ...e,
+            active: e.no === no
+        })));
+    }
     return (
         <TabsUl>
-            {tabBoxItems.map(item => <TabItem item={item} key={item.no} />)}
+            {tabBoxItem.map(item => <TabItem item={item} key={item.no} onClick={onTabClick}/>)}
         </TabsUl>
     );
 }
