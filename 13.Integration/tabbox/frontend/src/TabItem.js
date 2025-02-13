@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {Tab_Item} from "./assets/scss/TabItem.scss"
 
-function TabItem({item,onClick}) {
+function TabItem({item,onClick,index}) {
     return (
         <li className={`${Tab_Item} ${item.active?"active":""}`} key={item.no}
-        onClick={()=>onClick(item.no)}>{item.name}</li>
+        onClick={()=>onClick(index)}>{item.name}</li>
     );
 }
 

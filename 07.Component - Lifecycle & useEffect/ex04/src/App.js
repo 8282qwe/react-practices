@@ -14,7 +14,7 @@ export default function App() {
         }
     }
     const [currentTime, setCurrentTime] = useState(getCurrentTime());
-    const [ticks, setTicks] = useState(1);
+    const [ticks, setTicks] = useState(0);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
