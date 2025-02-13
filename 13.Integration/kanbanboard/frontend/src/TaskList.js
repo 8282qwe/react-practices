@@ -7,7 +7,7 @@ function TaskList({tasks}) {
     const [newTask, setNewTask] = useState("");
 
     const addTask = (e) => {
-        if (e.key !== "Enter" || newTask === "") {
+        if (e.key !== "Enter" || newTask === "" || e.nativeEvent.isComposing) {
             return;
         }
         setTaskList((prevTasks) => [...prevTasks,

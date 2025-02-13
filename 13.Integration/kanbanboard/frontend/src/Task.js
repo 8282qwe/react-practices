@@ -20,16 +20,21 @@ function Task({item,deleteTask}) {
 
     return (
         <TaskStyledLi>
-            <input type='checkbox' checked={task.done} onChange={() => {setTask(prev => {
-                return {
-                    ...prev,
-                    done: !prev.done,
-                }
-            })}} />
+            <input type='checkbox' checked={task.done} onChange={() => {
+                setTask(prev => {
+                    return {
+                        ...prev,
+                        done: !prev.done,
+                    }
+                })
+            }}/>
             {
                 ` ${task.name} `
             }
-            <a href='#' className={"Task_Remove"} onClick={() => deleteTask(item.no)}></a>
+            <a href='#' className={"Task_Remove"} onClick={(e) => {
+                e.preventDefault();
+                deleteTask(item.no)
+            }}></a>
         </TaskStyledLi>
     );
 }
