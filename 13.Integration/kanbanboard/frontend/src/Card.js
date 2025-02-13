@@ -24,11 +24,13 @@ function Card({item}) {
             <div className={`${Card_Title} ${onToggle ? Card_Title_Open : ""}`}
                  onClick={() => setOnToggle(prevState => !prevState)}>{item.title}</div>
             {
-                onToggle ? (<div className='Card_Details'>
-                    {item.description}
-                </div>) : null
+                onToggle ? (
+                    <>
+                        <div className='Card_Details'>{item.description}</div>
+                        <TaskList tasks={item.tasks} key={item.no} />
+                    </>
+                ) : null
             }
-            <TaskList tasks={item.tasks} key={item.no} />
         </StyledDiv>
     );
 }
