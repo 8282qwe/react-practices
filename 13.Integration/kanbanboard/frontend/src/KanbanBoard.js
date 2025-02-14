@@ -4,18 +4,15 @@ import CardList from "./CardList";
 import data from "./assets/json/data";
 
 function KanbanBoard() {
+    const boardType = ["ToDo", "Doing", "Done"];
 
     return (
         <div className={Kanban_Board}>
-            <CardList cardTitle={"To Do"} data={data.filter(({status})=>{
-                return status === 'ToDo';
-            })}/>
-            <CardList cardTitle={"Doing"} data={data.filter(({status})=>{
-                return status === 'Doing';
-            })}/>
-            <CardList cardTitle={"Done"} data={data.filter(({status})=>{
-                return status === 'Done';
-            })}/>
+            {
+                boardType.map((item, index) => (
+                    <CardList cardTitle={item} data={data.filter(({status}) => status === item)} key={index} />
+                ))
+            }
         </div>
     );
 }
