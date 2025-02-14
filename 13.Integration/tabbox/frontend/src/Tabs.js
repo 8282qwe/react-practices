@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import TabItem from "./TabItem";
 import styled from "styled-components";
 

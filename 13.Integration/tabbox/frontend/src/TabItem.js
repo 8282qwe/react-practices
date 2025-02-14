@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Tab_Item} from "./assets/scss/TabItem.scss"
 
 function TabItem({item,onClick,index}) {
