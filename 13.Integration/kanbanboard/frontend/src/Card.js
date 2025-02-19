@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import styled from "styled-components";
 import {Card_Title, Card_Title_Open} from "./assets/scss/CardTitle.scss"
 import TaskList from "./TaskList";
+import axios from "axios";
 
 const StyledDiv = styled.div`
     position: relative;
@@ -18,16 +19,28 @@ const StyledDiv = styled.div`
 
 function Card({item}) {
     const [onToggle, setOnToggle] = useState(false);
+    const [tasks, setTasks] = useState([]);
+
+    const getTasks = async () => {
+        const response = await axios.get("/kanbanboard/task",{
+            params: {
+                cardNo: item.no
+            }
+        });
+
+        setTasks(response.data.data);
+        setOnToggle(prevState => !prevState)
+    }
 
     return (
         <StyledDiv>
             <div className={`${Card_Title} ${onToggle ? Card_Title_Open : ""}`}
-                 onClick={() => setOnToggle(prevState => !prevState)}>{item.title}</div>
+                 onClick={() => getTasks()}>{item.title}</div>
             {
                 onToggle ? (
                     <>
                         <div className='Card_Details'>{item.description}</div>
-                        <TaskList tasks={item.tasks} key={item.no} />
+                        <TaskList tasks={tasks} key={item.no} cardNo={item.no} />
                     </>
                 ) : null
             }

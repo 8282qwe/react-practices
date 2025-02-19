@@ -1,27 +1,37 @@
 import React, {useState} from 'react';
 import {Task_List, Input_Add_Task} from "./assets/scss/TaskList.scss"
 import Task from "./Task";
+import axios from "axios";
 
-function TaskList({tasks}) {
+function TaskList({tasks,cardNo}) {
     const [taskList, setTaskList] = useState(tasks);
     const [newTask, setNewTask] = useState("");
 
-    const addTask = (e) => {
+    const addTask = async (e) => {
         if (e.key !== "Enter" || newTask === "" || e.nativeEvent.isComposing) {
             return;
         }
+
+
+        const response = await axios.post("/kanbanboard/task", {
+            name: newTask,
+            cardNo: cardNo
+        });
+
         setTaskList((prevTasks) => [...prevTasks,
             {
-                no: prevTasks[prevTasks.length - 1].no + 1,
+                no: response.data.data.no,
                 name: newTask,
-                done: false
+                done: "N"
             }
         ]);
         setNewTask("");
     }
 
-    const deleteTask = (taskNo) => {
-        setTaskList((prevTasks) => prevTasks.filter(task => task.no !== taskNo));
+    const deleteTask = async (taskNo) => {
+        const response = await axios.delete(`/kanbanboard/task/${taskNo}`);
+
+        setTaskList((prevTasks) => prevTasks.filter(task => task.no !== response.data.data));
     }
 
     return (

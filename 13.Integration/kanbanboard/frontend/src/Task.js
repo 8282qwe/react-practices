@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
+import axios from "axios";
 
 const TaskStyledLi = styled.li`
     &:first-child {
@@ -18,15 +19,22 @@ const TaskStyledLi = styled.li`
 function Task({item,deleteTask}) {
     const [task, setTask] = useState(item);
 
+    const clickCheckBox = async () => {
+        const response = await axios.put(`/kanbanboard/task/${task.no}`,{
+            done: task.done==='Y'?'N':'Y'
+        });
+
+        setTask(prev => ({
+            ...prev,
+            no: response.data.data.no,
+            done: response.data.data.done,
+        }))
+    }
+
     return (
         <TaskStyledLi>
-            <input type='checkbox' checked={task.done} onChange={() => {
-                setTask(prev => {
-                    return {
-                        ...prev,
-                        done: !prev.done,
-                    }
-                })
+            <input type='checkbox' checked={task.done==='Y'} onChange={() => {
+                clickCheckBox();
             }}/>
             {
                 ` ${task.name} `
