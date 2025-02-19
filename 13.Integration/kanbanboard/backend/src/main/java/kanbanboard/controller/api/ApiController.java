@@ -53,8 +53,6 @@ public class ApiController {
 		Objects.requireNonNull(no);
 		Objects.requireNonNull(data);
 
-		System.out.println(data.get("done"));
-
 		taskRepository.updateDone(no, data.get("done"));
 
 		return ResponseEntity.ok(JsonResult.success(Map.of("no", String.valueOf(no), "done", data.get("done"))));
